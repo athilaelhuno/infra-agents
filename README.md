@@ -16,12 +16,14 @@ Multi-agent infrastructure automation system powered by Antigravity and Spec-Kit
 ## Usage
 ### CLI Orchestrator
 ```bash
-python src/orchestrator.py "How is the health of the production pods?"
+export PYTHONPATH=$PYTHONPATH:.
+python3 src/orchestrator.py "How is the health of the production pods?"
 ```
 
 ### Dashboard
 ```bash
-python src/dashboard/app.py
+export PYTHONPATH=$PYTHONPATH:.
+python3 src/dashboard/app.py
 ```
 Visit `http://localhost:8000` to manage your configuration.
 
