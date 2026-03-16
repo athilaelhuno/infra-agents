@@ -1,50 +1,42 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: 0.0.0 → 1.0.0
+- Modified principles: Replaced placeholders with 5 core infra-agent principles.
+- Added sections: Security & Credentials Management, Development Workflow & Review.
+- Removed sections: N/A
+- Templates requiring updates: ✅ None required at this stage.
+- Follow-up TODOs: None.
+-->
+
+# infra-agents Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Agent Independence & Single Responsibility
+Each agent within the system focuses on a singular domain (e.g., Terraform, Kubernetes, GitOps, Jira, Confluence, GitLab). Agents must communicate through clear, decoupled interfaces and avoid overstepping into another agent's domain.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Infrastructure as Code (IaC) Strictness
+All infrastructure states must be defined in code (Terraform, Terragrunt, Kubernetes manifests). Agents should avoid imperative or manual changes unless explicitly requested for emergency troubleshooting.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Idempotency & Safety Guards
+Agents must treat "dry-run" or "plan" as the default state. **CRITICAL: No command that creates, updates, or deletes resources can be executed without explicit user confirmation.**
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Observability & Traceability
+All actions must be summarized in human-readable format.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. GitOps-First Alignment
+For Kubernetes deployments, agents should prefer updating state repositories to trigger FluxCD reconciliations, rather than modifying cluster state directly, preserving the GitOps source of truth.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Security & Credentials Management
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+Agents MUST NOT log or expose plaintext secrets, tokens, or credentials in outputs or incident tickets. Access to Google Cloud Platform (GCP), GitLab, and Kubernetes should use short-lived tokens, Workload Identity, or secure secret injection methods (e.g., SOPS).
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow, Review & Automation
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Automated module creation or significant configuration changes MUST result in a Merge Request (MR) in GitLab for human review. Agents must create comprehensive documentation in Confluence and link related Jira tickets to the MR description.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This Constitution supersedes all ad-hoc instructions or temporary practices. Adding new capabilities or agents to the `infra-agents` system requires ensuring they adhere to these core principles. Any deviation must be justified and documented.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-16 | **Last Amended**: 2026-03-16

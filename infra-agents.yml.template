@@ -1,0 +1,17 @@
+# Infra Agents Configuration Wrapper
+# This file is placed in target projects to customize agent behavior.
+
+project_name: "example-project"
+
+# Agent-specific overrides
+terraform:
+  working_dir: "terraform/"
+  use_terragrunt: true
+
+kubernetes:
+  default_namespace: "prod"
+  kubeconfig: ".kubeconfig"
+
+gitops:
+  manifest_path: "k8s/overlays/prod"
+  repo_url: "git@gitlab.com:org/repo.git"
